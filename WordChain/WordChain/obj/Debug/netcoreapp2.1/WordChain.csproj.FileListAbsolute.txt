@@ -1,0 +1,14 @@
+E:\KATA\WordChain\WordChain\WordChain\bin\Debug\netcoreapp2.1\xunit.runner.visualstudio.dotnetcore.testadapter.dll
+E:\KATA\WordChain\WordChain\WordChain\bin\Debug\netcoreapp2.1\xunit.runner.reporters.netcoreapp10.dll
+E:\KATA\WordChain\WordChain\WordChain\bin\Debug\netcoreapp2.1\xunit.runner.utility.netcoreapp10.dll
+E:\KATA\WordChain\WordChain\WordChain\bin\Debug\netcoreapp2.1\WordChain.deps.json
+E:\KATA\WordChain\WordChain\WordChain\bin\Debug\netcoreapp2.1\WordChain.runtimeconfig.json
+E:\KATA\WordChain\WordChain\WordChain\bin\Debug\netcoreapp2.1\WordChain.runtimeconfig.dev.json
+E:\KATA\WordChain\WordChain\WordChain\bin\Debug\netcoreapp2.1\WordChain.dll
+E:\KATA\WordChain\WordChain\WordChain\bin\Debug\netcoreapp2.1\WordChain.pdb
+E:\KATA\WordChain\WordChain\WordChain\obj\Debug\netcoreapp2.1\WordChain.csprojAssemblyReference.cache
+E:\KATA\WordChain\WordChain\WordChain\obj\Debug\netcoreapp2.1\WordChain.csproj.CoreCompileInputs.cache
+E:\KATA\WordChain\WordChain\WordChain\obj\Debug\netcoreapp2.1\WordChain.AssemblyInfoInputs.cache
+E:\KATA\WordChain\WordChain\WordChain\obj\Debug\netcoreapp2.1\WordChain.AssemblyInfo.cs
+E:\KATA\WordChain\WordChain\WordChain\obj\Debug\netcoreapp2.1\WordChain.dll
+E:\KATA\WordChain\WordChain\WordChain\obj\Debug\netcoreapp2.1\WordChain.pdb
