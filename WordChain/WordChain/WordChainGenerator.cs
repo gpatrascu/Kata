@@ -1,11 +1,11 @@
-﻿namespace WordChain
-{
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-    using System.Text;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
 
+namespace WordChain
+{
     public class WordChainGenerator
     {
         const string alphabet = "abcdefghijklmnopqrstuvwxyz";
@@ -16,48 +16,65 @@
 
         private string lastWord;
 
+        private List<string> validWords;
+
         public WordChainGenerator(string firstWord, string lastWord)
         {
             this.firstWord = firstWord;
             this.lastWord = lastWord;
+            var words = GetDictionary();
+            validWords = words.Where(x => x.Length == firstWord.Length).ToList();
         }
 
         public string GetWordChain()
         {
-            var words = this.GetDictionary();
-            var wordLength = this.firstWord.Length;
-            var validWords = words.Where(x => x.Length == wordLength);
+            var wordCChain = new List<string> {firstWord};
 
-            var result = new List<string> { this.firstWord };
-
-            for (int i = 0; i < this.firstWord.Length; i++)
+            if (CheckIfWordsDifferByOneLetter(firstWord, lastWord))
             {
-                var temp = this.firstWord;
-
-                // iterate through alphabet letters
-                foreach (char c in alphabet)
-                {
-                    // update word first letter with alphabet letter/s
-                    temp = this.ReplaceChar(c, i);
-                    if (validWords.Contains(temp))
-                    {
-                        result.Add(temp);
-                        if (temp == this.lastWord)
-                        {
-                            return this.ProcessResult(result);
-                        }
-                    }
-
-                    // check if the word exist in dictionary
-                    // and check if it is similar with last Word
-                    // if exists in dictionary but not last word, switch to the next letter in the first word
-                    // check if it exist in the dictionary and if it's the last word
-                    // if not, recursive to the first letter
-                    // and so on..
-                }
+                wordCChain.Add(lastWord);
+                return ProcessResult(wordCChain);
             }
 
-            return this.ProcessResult(result);
+            wordCChain =  GetResult(firstWord, GetWordsThatDifferByOneLetterFrom(firstWord, validWords), wordCChain);
+
+            return ProcessResult(wordCChain);
+        }
+
+        private List<string> GetResult(string currentWord, List<string> similarWords, List<string> wordChain)
+        {
+            foreach (var similarWord in similarWords)
+            {
+                if (similarWord == lastWord)
+                {
+                    wordChain.Add(similarWord);
+                    return wordChain;
+                }
+
+                if (GetWordsThatDifferByOneLetterFrom(similarWord).Count == 0)
+                {
+                    var smallChain = wordChain.Remove(similarWord);
+                    //return;
+                }
+                
+                wordChain.Add(similarWord);
+                GetResult(similarWord, GetWordsThatDifferByOneLetterFrom(similarWord), wordChain);
+            }
+        }
+
+        private List<string> GetWordsThatDifferByOneLetterFrom(string word)
+        {
+            return this.validWords.Where(validWord => CheckIfWordsDifferByOneLetter(word, validWord)).ToList();
+        }
+        
+        private bool CheckIfWordsDifferByOneLetter(string firstWord, string lastWord)
+        {
+            return HemmingDistance(firstWord, lastWord) == 1;
+        }
+        
+        private int HemmingDistance(string firstWord, string lastWord)
+        {
+            return firstWord.Where((t, i) => t != lastWord[i]).Count();
         }
 
         private List<string> GetDictionary()
@@ -71,7 +88,7 @@
             return string.Join(" ", result.ToArray());
         }
 
-        private string ReplaceChar(char c, int index)
+        private string ReplaceLetterAtPosition(char c, int index, string firstWord)
         {
             StringBuilder strBuilder = new StringBuilder(this.firstWord);
             strBuilder[index] = c;
