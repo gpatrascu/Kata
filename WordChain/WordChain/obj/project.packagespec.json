@@ -6,6 +6,9 @@
     "projectPath": "/home/george/work/Kata/WordChain/WordChain/WordChain.csproj",
     "outputPath": "/home/george/work/Kata/WordChain/WordChain/obj/",
     "projectStyle": "PackageReference",
+    "fallbackFolders": [
+      "/usr/share/dotnet/sdk/NuGetFallbackFolder"
+    ],
     "originalTargetFrameworks": [
       "netcoreapp2.1"
     ],

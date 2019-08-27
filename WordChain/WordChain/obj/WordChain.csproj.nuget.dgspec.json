@@ -13,8 +13,11 @@
         "packagesPath": "/home/george/.nuget/packages/",
         "outputPath": "/home/george/work/Kata/WordChain/WordChain/obj/",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "/usr/share/dotnet/sdk/NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "/home/george/.nuget/NuGet/NuGet.Config"
+          "/home/george/.config/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp2.1"

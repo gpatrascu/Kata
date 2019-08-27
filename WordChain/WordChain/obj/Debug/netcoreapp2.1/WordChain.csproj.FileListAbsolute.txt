@@ -26,3 +26,4 @@ D:/katagithub/Kata/WordChain/WordChain/obj/Debug/netcoreapp2.1/WordChain.pdb
 /home/george/work/Kata/WordChain/WordChain/bin/Debug/netcoreapp2.1/WordChain.runtimeconfig.dev.json
 /home/george/work/Kata/WordChain/WordChain/bin/Debug/netcoreapp2.1/WordChain.dll
 /home/george/work/Kata/WordChain/WordChain/bin/Debug/netcoreapp2.1/WordChain.pdb
+/home/george/work/Kata/WordChain/WordChain/bin/Debug/netcoreapp2.1/words.txt
