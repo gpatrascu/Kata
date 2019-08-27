@@ -1,22 +1,16 @@
 ﻿{
   "version": "1.0.0",
   "restore": {
-    "projectUniqueName": "D:\\katagithub\\Kata\\WordChain\\WordChain\\WordChain.csproj",
+    "projectUniqueName": "/home/george/work/Kata/WordChain/WordChain/WordChain.csproj",
     "projectName": "WordChain",
-    "projectPath": "D:\\katagithub\\Kata\\WordChain\\WordChain\\WordChain.csproj",
-    "outputPath": "D:\\katagithub\\Kata\\WordChain\\WordChain\\obj\\",
+    "projectPath": "/home/george/work/Kata/WordChain/WordChain/WordChain.csproj",
+    "outputPath": "/home/george/work/Kata/WordChain/WordChain/obj/",
     "projectStyle": "PackageReference",
-    "fallbackFolders": [
-      "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-    ],
     "originalTargetFrameworks": [
       "netcoreapp2.1"
     ],
     "sources": {
-      "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-      "c:\\localnuget\\": {},
-      "http://ap-dco202-art/api/nuget/nuget-virtual": {},
-      "https://www.nuget.org/api/v2/": {}
+      "https://api.nuget.org/v3/index.json": {}
     },
     "frameworks": {
       "netcoreapp2.1": {

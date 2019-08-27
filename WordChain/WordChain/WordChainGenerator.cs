@@ -1,98 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace WordChain
 {
     public class WordChainGenerator
     {
-        const string alphabet = "abcdefghijklmnopqrstuvwxyz";
+        private readonly IList<string> dictionary;
 
-        private const string fileName = "..\\..\\..\\words.txt";
-
-        private string firstWord;
-
-        private string lastWord;
-
-        private List<string> validWords;
-
-        public WordChainGenerator(string firstWord, string lastWord)
+        public WordChainGenerator(IList<string> dictionary)
         {
-            this.firstWord = firstWord;
-            this.lastWord = lastWord;
-            var words = GetDictionary();
-            validWords = words.Where(x => x.Length == firstWord.Length).ToList();
+            this.dictionary = dictionary;
         }
 
-        public string GetWordChain()
+        public IEnumerable<string> GetWordChain(string inputWord, string finalWord)
         {
-            var wordCChain = new List<string> {firstWord};
+            var chain = new List<string>();
+            chain.Add(inputWord);
 
-            if (CheckIfWordsDifferByOneLetter(firstWord, lastWord))
+            chain.AddRange(GetNextInChain(inputWord, finalWord));
+
+            if (!chain.Contains(finalWord))
             {
-                wordCChain.Add(lastWord);
-                return ProcessResult(wordCChain);
+                chain.Add(finalWord);
             }
 
-            wordCChain =  GetResult(firstWord, GetWordsThatDifferByOneLetterFrom(firstWord, validWords), wordCChain);
-
-            return ProcessResult(wordCChain);
+            return chain;
         }
 
-        private List<string> GetResult(string currentWord, List<string> similarWords, List<string> wordChain)
+        private IEnumerable<string> GetNextInChain(string inputWord, string finalWord)
         {
-            foreach (var similarWord in similarWords)
-            {
-                if (similarWord == lastWord)
-                {
-                    wordChain.Add(similarWord);
-                    return wordChain;
-                }
-
-                if (GetWordsThatDifferByOneLetterFrom(similarWord).Count == 0)
-                {
-                    var smallChain = wordChain.Remove(similarWord);
-                    //return;
-                }
-                
-                wordChain.Add(similarWord);
-                GetResult(similarWord, GetWordsThatDifferByOneLetterFrom(similarWord), wordChain);
-            }
+            return dictionary.Where(s => HammingDistaceIsOne(inputWord, s));
         }
 
-        private List<string> GetWordsThatDifferByOneLetterFrom(string word)
+        private bool HammingDistaceIsOne(string string1, string string2)
         {
-            return this.validWords.Where(validWord => CheckIfWordsDifferByOneLetter(word, validWord)).ToList();
-        }
-        
-        private bool CheckIfWordsDifferByOneLetter(string firstWord, string lastWord)
-        {
-            return HemmingDistance(firstWord, lastWord) == 1;
-        }
-        
-        private int HemmingDistance(string firstWord, string lastWord)
-        {
-            return firstWord.Where((t, i) => t != lastWord[i]).Count();
-        }
-
-        private List<string> GetDictionary()
-        {
-            string text = File.ReadAllText(fileName);
-            return text.Split(Environment.NewLine).ToList();
-        }
-
-        private string ProcessResult(List<string> result)
-        {
-            return string.Join(" ", result.ToArray());
-        }
-
-        private string ReplaceLetterAtPosition(char c, int index, string firstWord)
-        {
-            StringBuilder strBuilder = new StringBuilder(this.firstWord);
-            strBuilder[index] = c;
-            return strBuilder.ToString();
+            return string1.Where((characterInString, characterIndex) 
+                    => characterInString != string2[characterIndex]).Count() == 1;
         }
     }
 }

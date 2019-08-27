@@ -1,45 +1,61 @@
+using System.Collections.Generic;
+using Xunit;
+
 namespace WordChain
 {
-    using Xunit;
-
     public class WordChainGeneratorTests
     {
-        private const string Case1 = "cat,cot,cog,dog";
-
         [Fact]
-        public void GetWordChainForAbacaAback()
+        public void ShouldReturnTheDictionaryIfDictionaryOnlyHas2characters()
         {
-            string firstWord = "abaca";
-            string lastWord = "aback";
+            var generator = CreateSut();
+            var result = generator.GetWordChain("a", "b");
 
-            var generator = new WordChainGenerator(firstWord, lastWord);
-            var wordChainResult = generator.GetWordChain();
-
-            Assert.Equal("abaca aback", wordChainResult);
+            Assert.Equal(new List<string> {"a", "b"}, result);
         }
-        
-        [Fact]
-        public void GetWordChainForAbackAbaca()
+
+        private static WordChainGenerator CreateSut()
         {
-            string firstWord = "aback";
-            string lastWord = "abaca";
+            IList<string> dictionary = new List<string>
+            {
+                "a", "b"
+            };
 
-            var generator = new WordChainGenerator(firstWord, lastWord);
-            var wordChainResult = generator.GetWordChain();
+            var generator = new WordChainGenerator(dictionary);
+            return generator;
+        }
 
-            Assert.Equal("aback abaca", wordChainResult);
-        } 
-        
         [Fact]
-        public void GetWordChainForCatCotCog()
+        public void When_we_have_3_words_in_dictionary()
         {
-            string firstWord = "cat";
-            string lastWord = "cog";
+            IList<string> dictionary = new List<string>
+            {
+                "aa",
+                "ab",
+                "bb"
+            };
 
-            var generator = new WordChainGenerator(firstWord, lastWord);
-            var wordChainResult = generator.GetWordChain();
+            var generator = new WordChainGenerator(dictionary);
+            var result = generator.GetWordChain("aa", "bb");
 
-            Assert.Equal("cat cot cog", wordChainResult);
+            Assert.Equal(new List<string> {"aa", "ab", "bb"}, result);
+        }
+
+        [Fact]
+        public void When_we_have_4_words_in_dictionary()
+        {
+            IList<string> dictionary = new List<string>
+            {
+                "aa",
+                "ab",
+                "ac",
+                "bb"
+            };
+
+            var generator = new WordChainGenerator(dictionary);
+            var result = generator.GetWordChain("aa", "bb");
+
+            Assert.Equal(new List<string> {"aa", "ab", "bb"}, result);
         }
     }
 }

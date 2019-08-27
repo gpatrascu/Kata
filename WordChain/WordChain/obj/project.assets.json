@@ -5854,33 +5854,25 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\gpatrasc\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "/home/george/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\katagithub\\Kata\\WordChain\\WordChain\\WordChain.csproj",
+      "projectUniqueName": "/home/george/work/Kata/WordChain/WordChain/WordChain.csproj",
       "projectName": "WordChain",
-      "projectPath": "D:\\katagithub\\Kata\\WordChain\\WordChain\\WordChain.csproj",
-      "packagesPath": "C:\\Users\\gpatrasc\\.nuget\\packages\\",
-      "outputPath": "D:\\katagithub\\Kata\\WordChain\\WordChain\\obj\\",
+      "projectPath": "/home/george/work/Kata/WordChain/WordChain/WordChain.csproj",
+      "packagesPath": "/home/george/.nuget/packages/",
+      "outputPath": "/home/george/work/Kata/WordChain/WordChain/obj/",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\gpatrasc\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "/home/george/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp2.1"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "c:\\localnuget\\": {},
-        "http://ap-dco202-art/api/nuget/nuget-virtual": {},
-        "https://www.nuget.org/api/v2/": {}
+        "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "netcoreapp2.1": {
