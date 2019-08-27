@@ -5854,24 +5854,33 @@
     ]
   },
   "packageFolders": {
-    "/home/george/.nuget/packages/": {}
+    "C:\\Users\\valen\\.nuget\\packages\\": {},
+    "C:\\ProgramData\\Xamarin\\NuGet\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/george/work/Kata/WordChain/WordChain/WordChain.csproj",
+      "projectUniqueName": "C:\\work\\kata\\kata\\WordChain\\WordChain\\WordChain.csproj",
       "projectName": "WordChain",
-      "projectPath": "/home/george/work/Kata/WordChain/WordChain/WordChain.csproj",
-      "packagesPath": "/home/george/.nuget/packages/",
-      "outputPath": "/home/george/work/Kata/WordChain/WordChain/obj/",
+      "projectPath": "C:\\work\\kata\\kata\\WordChain\\WordChain\\WordChain.csproj",
+      "packagesPath": "C:\\Users\\valen\\.nuget\\packages\\",
+      "outputPath": "C:\\work\\kata\\kata\\WordChain\\WordChain\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\ProgramData\\Xamarin\\NuGet\\",
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
-        "/home/george/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\valen\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp2.1"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
