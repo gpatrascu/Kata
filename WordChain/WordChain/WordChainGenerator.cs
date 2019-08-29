@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace WordChain
 {
@@ -36,10 +37,9 @@ namespace WordChain
                     reducedDictionary
                         .Where(s => HammingDistaceIsOne(wordChain.Last(), s)).ToList();
 
-                if (nextWords.Contains(finalWord)) 
+                if (nextWords.Contains(finalWord))
                 {
-                    wordChain.Add(finalWord); 
-                    return new List<List<string>> {wordChain};
+                    return new List<List<string>> {NewChain(wordChain, finalWord)};
                 }
 
                 newChains.AddRange(nextWords.Select(s => NewChain(wordChain, s)).ToList());
