@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 
 namespace WordChain
 {
@@ -16,68 +14,55 @@ namespace WordChain
 
         public IEnumerable<string> GetWordChain(string inputWord, string finalWord)
         {
-            var visited = new Dictionary<string, string> {{inputWord, inputWord}};
-            return new List<string> {inputWord}.Union(GetNextWords(inputWord, finalWord,
-                visited, new Dictionary<string, string>()));
-        }
+            var reducedDictionary = dictionary.Where(s => s.Length == inputWord.Length).ToList();
+            var chains = new List<List<string>> {new List<string> {inputWord}};
 
-        private IEnumerable<string> GetNextWords(string inputWord, string finalWord, Dictionary<string, string> visited,
-            Dictionary<string, string> lowerLevel)
-        {
-            var oneLetterAway = dictionary.Where(s => s.Length == inputWord.Length)
-                .Where(s => HammingDistaceIsOne(inputWord, s)
-                            && !visited.ContainsKey(s)
-                            && !lowerLevel.ContainsKey(s)
-                ).ToList();
-
-            Print(oneLetterAway, inputWord);
-
-            if (oneLetterAway.Contains(finalWord)) return new[] {finalWord};
-
-            if (!oneLetterAway.Any()) return oneLetterAway;
-
-            var lists = oneLetterAway
-                .Select(word => BuildWordsList(finalWord, visited, word, oneLetterAway, lowerLevel))
-                .ToList();
-            ;
-
-            var firstOrDefault = lists.Where(_ => _.Contains(finalWord))
-                .OrderBy(_ => _.Count).FirstOrDefault();
-
-            return firstOrDefault ?? new List<string>();
-        }
-
-        private List<string> BuildWordsList(string finalWord, Dictionary<string, string> visited, string word,
-            List<string> oneLetterAway, Dictionary<string, string> lowerLevel)
-        {
-            var previous = oneLetterAway.ToList();
-            previous.Remove(word);
-            var list = new Dictionary<string, string>(lowerLevel);
-            foreach (var w in previous) list.Add(w, w);
-
-            return new List<string> {word}.Union(GetNextWords(word, finalWord, Visited(visited, word), list)).ToList();
-        }
-
-        private static Dictionary<string, string> Visited(Dictionary<string, string> visited, string word)
-        {
-            return new Dictionary<string, string>(visited) {{word, word}};
-        }
-
-        private void Print(IList<string> nextInChain, string inputWord)
-        {
-            Console.WriteLine();
-            Console.WriteLine("word = " + inputWord);
-            foreach (var w in nextInChain)
+            while (!chains.Last().Contains(finalWord))
             {
-                Console.Write(w);
-                Console.Write(" ");
+                chains = GoToNextTreeLevel(chains, reducedDictionary, finalWord);
             }
+
+            return chains.Last();
+        }
+
+        private List<List<string>> GoToNextTreeLevel(List<List<string>> chains, List<string> reducedDictionary,
+            string finalWord)
+        {
+            var newChains = new List<List<string>>();
+
+            foreach (var wordChain in chains)
+            {
+                var nextWords =
+                    reducedDictionary
+                        .Where(s => HammingDistaceIsOne(wordChain.Last(), s)).ToList();
+
+                if (nextWords.Contains(finalWord)) 
+                {
+                    wordChain.Add(finalWord); 
+                    return new List<List<string>> {wordChain};
+                }
+
+                newChains.AddRange(nextWords.Select(s => NewChain(wordChain, s)).ToList());
+            }
+            
+            return newChains;
+        }
+
+        private List<string> NewChain(List<string> chain, string word)
+        {
+            var list = chain.ToList();
+            list.Add(word);
+            return list;
         }
 
         private bool HammingDistaceIsOne(string string1, string string2)
         {
-            return string1.Where((characterInString, characterIndex)
-                       => characterInString != string2[characterIndex]).Count() == 1;
+            if (string1.Length != string2.Length) return false;
+
+            return string1
+                       .Where((characterInString, characterIndex)
+                           => characterInString != string2[characterIndex])
+                       .Count() == 1;
         }
     }
 }
