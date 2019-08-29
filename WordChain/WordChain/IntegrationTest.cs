@@ -7,7 +7,8 @@ namespace WordChain
 {
     public class IntegrationTest
     {
-        [Fact]
+        [Fact(Skip = "integration")]
+        //[Fact]
         public void Example_cat_dog()
         {
             var readAllLines = File.ReadAllLines("./words.txt");
@@ -16,7 +17,7 @@ namespace WordChain
 
             foreach (var word in wordChain)
             {
-                Console.WriteLine(word);
+                Console.WriteLine(word + ",");
             }
         } 
     }
