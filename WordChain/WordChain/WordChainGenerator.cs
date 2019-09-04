@@ -15,7 +15,7 @@ namespace WordChain
 
         public IEnumerable<string> GetWordChain(string inputWord, string finalWord)
         {
-            var reducedDictionary = dictionary.Where(s => s.Length == inputWord.Length).ToList();
+            var reducedDictionary = GetReducedDictionary(inputWord);
             var chains = new List<List<string>> {new List<string> {inputWord}};
 
             while (!chains.Last().Contains(finalWord))
@@ -26,7 +26,12 @@ namespace WordChain
             return chains.Last();
         }
 
-        private List<List<string>> GoToNextTreeLevel(List<List<string>> chains, List<string> reducedDictionary,
+        private List<string> GetReducedDictionary(string inputWord)
+        {
+            return dictionary.Where(s => s.Length == inputWord.Length).ToList();
+        }
+
+        private List<List<string>> GoToNextTreeLevel(List<List<string>> chains, IList<string> reducedDictionary,
             string finalWord)
         {
             var newChains = new List<List<string>>();
@@ -42,7 +47,7 @@ namespace WordChain
                     return new List<List<string>> {NewChain(wordChain, finalWord)};
                 }
 
-                newChains.AddRange(nextWords.Select(s => NewChain(wordChain, s)).ToList());
+                newChains.AddRange(nextWords.Select(s => NewChain(wordChain, s)));
             }
             
             return newChains;
@@ -57,12 +62,22 @@ namespace WordChain
 
         private bool HammingDistaceIsOne(string string1, string string2)
         {
-            if (string1.Length != string2.Length) return false;
+            var differentCharacters = 0;
+            
+            for (var i = 0; i < string1.Length; i++)
+            {
+                if (string1[i] != string2[i])
+                {
+                    differentCharacters++;
+                }
 
-            return string1
-                       .Where((characterInString, characterIndex)
-                           => characterInString != string2[characterIndex])
-                       .Count() == 1;
+                if (differentCharacters > 1)
+                {
+                    return false;
+                }
+            }
+  
+            return differentCharacters == 1;
         }
     }
 }
