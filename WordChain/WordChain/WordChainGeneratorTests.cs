@@ -43,6 +43,18 @@ namespace WordChain
         }
         
         [Fact]
+        public void When_we_dont_have_a_route()
+        {
+            var generator = CreateSut("aa",
+                "ac",
+                "cc",
+                "bb");
+            var result = generator.GetWordChain("aa", "bb");
+
+            Assert.Equal(new List<string>(), result);
+        }
+        
+        [Fact]
         public void When_we_have_the_cat_dog_example_words_in_dictionary()
         {
             var generator = CreateSut("bat","bad", "bag", "bog", "cat", "cot", "cog", "dog");

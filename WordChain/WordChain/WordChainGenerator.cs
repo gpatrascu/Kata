@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace WordChain
 {
@@ -18,12 +17,10 @@ namespace WordChain
             var reducedDictionary = GetReducedDictionary(inputWord);
             var chains = new List<List<string>> {new List<string> {inputWord}};
 
-            while (!chains.Last().Contains(finalWord))
-            {
+            while (chains.Any() && !chains.Last().Contains(finalWord))
                 chains = GoToNextTreeLevel(chains, reducedDictionary, finalWord);
-            }
 
-            return chains.Last();
+            return chains.Any() ? chains.Last() : new List<string>();
         }
 
         private List<string> GetReducedDictionary(string inputWord)
@@ -40,16 +37,13 @@ namespace WordChain
             {
                 var nextWords =
                     reducedDictionary
-                        .Where(s => HammingDistaceIsOne(wordChain.Last(), s)).ToList();
+                        .Where(s => HammingDistaceIsOne(wordChain.Last(), s) && !wordChain.Contains(s)).ToList();
 
-                if (nextWords.Contains(finalWord))
-                {
-                    return new List<List<string>> {NewChain(wordChain, finalWord)};
-                }
+                if (nextWords.Contains(finalWord)) return new List<List<string>> {NewChain(wordChain, finalWord)};
 
                 newChains.AddRange(nextWords.Select(s => NewChain(wordChain, s)));
             }
-            
+
             return newChains;
         }
 
@@ -63,20 +57,14 @@ namespace WordChain
         private bool HammingDistaceIsOne(string string1, string string2)
         {
             var differentCharacters = 0;
-            
+
             for (var i = 0; i < string1.Length; i++)
             {
-                if (string1[i] != string2[i])
-                {
-                    differentCharacters++;
-                }
+                if (string1[i] != string2[i]) differentCharacters++;
 
-                if (differentCharacters > 1)
-                {
-                    return false;
-                }
+                if (differentCharacters > 1) return false;
             }
-  
+
             return differentCharacters == 1;
         }
     }
