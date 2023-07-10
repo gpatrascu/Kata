@@ -1,23 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "D:\\katagithub\\Kata\\WordChain\\WordChain\\WordChain.csproj": {}
+    "c:\\thoughtworks\\kata\\Kata\\WordChain\\WordChain\\WordChain.csproj": {}
   },
   "projects": {
-    "D:\\katagithub\\Kata\\WordChain\\WordChain\\WordChain.csproj": {
+    "c:\\thoughtworks\\kata\\Kata\\WordChain\\WordChain\\WordChain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\katagithub\\Kata\\WordChain\\WordChain\\WordChain.csproj",
+        "projectUniqueName": "c:\\thoughtworks\\kata\\Kata\\WordChain\\WordChain\\WordChain.csproj",
         "projectName": "WordChain",
-        "projectPath": "D:\\katagithub\\Kata\\WordChain\\WordChain\\WordChain.csproj",
-        "packagesPath": "C:\\Users\\gpatrasc\\.nuget\\packages\\",
-        "outputPath": "D:\\katagithub\\Kata\\WordChain\\WordChain\\obj\\",
+        "projectPath": "c:\\thoughtworks\\kata\\Kata\\WordChain\\WordChain\\WordChain.csproj",
+        "packagesPath": "C:\\dev\\devtools\\.nuget\\packages",
+        "outputPath": "c:\\thoughtworks\\kata\\Kata\\WordChain\\WordChain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\gpatrasc\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\g.patrascu\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -25,12 +27,12 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "c:\\localnuget\\": {},
-          "http://ap-dco202-art/api/nuget/nuget-virtual": {},
-          "https://www.nuget.org/api/v2/": {}
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "netcoreapp2.1": {
+            "targetAlias": "netcoreapp2.1",
             "projectReferences": {}
           }
         },
@@ -42,6 +44,7 @@
       },
       "frameworks": {
         "netcoreapp2.1": {
+          "targetAlias": "netcoreapp2.1",
           "dependencies": {
             "Microsoft.NET.Test.Sdk": {
               "target": "Package",
@@ -63,10 +66,17 @@
             }
           },
           "imports": [
-            "net461"
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
-          "warn": true
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }
