@@ -6,8 +6,8 @@ public class UnitTest1
     [InlineData(new[] { 1, 2, 3, 0, 0, 0 }, 3, new[] { 2, 5, 6 }, 3, new[] { 1, 2, 2, 3, 5, 6 })]
     [InlineData(new[] { 1 }, 1, new int[0], 0, new[] { 1 })]
     [InlineData(new[] { 0 }, 0, new[] { 1 }, 1, new[] { 1 })]
-    [InlineData(new[] { 2,0 }, 1, new[] { 1 }, 1, new[] { 1, 2 })]
-    [InlineData(new[] { -1,0,0,3,3,3,0,0,0 }, 6, new[] { 1,2,2 }, 3, new[] { -1,0,0,1,2,2,3,3,3 })]
+    [InlineData(new[] { 2, 0 }, 1, new[] { 1 }, 1, new[] { 1, 2 })]
+    [InlineData(new[] { -1, 0, 0, 3, 3, 3, 0, 0, 0 }, 6, new[] { 1, 2, 2 }, 3, new[] { -1, 0, 0, 1, 2, 2, 3, 3, 3 })]
     public void Test(int[] nums1, int m, int[] nums2, int n, int[] expectedArray)
     {
         Solution.Merge(nums1, m, nums2, n);
@@ -19,41 +19,40 @@ public class Solution
 {
     public static void Merge(int[] nums1, int m, int[] nums2, int n)
     {
-        var nums2Index = 0;
-        var nums1Index = 0;
+        int[] result = new int[m + n];
+        int nums1Index = 0;
+        int nums2Index = 0;
 
-        if (n == 0)
+        for (var i = 0; i < m + n; i++)
         {
-            return;
-        }
-
-        while (nums1Index < m + n && nums2Index < n)
-        {
-            if (nums2[nums2Index] < nums1[nums1Index])
+            if (nums1Index == m)
             {
-                for (var copyIndex = m + n - 1; copyIndex > nums1Index; copyIndex--)
-                {
-                    nums1[copyIndex] = nums1[copyIndex - 1];
-                }
-
-                nums1[nums1Index] = nums2[nums2Index];
+                result[i] = nums2[nums2Index];
                 nums2Index++;
+                continue;
             }
 
-            nums1Index++;
-        }
+            if (nums2Index == n)
+            {
+                result[i] = nums1[nums1Index];
+                nums1Index++;
+                continue;
+            }
 
-        while (nums1Index < m + n && nums2Index < n)
-        {
-            nums1[nums1Index] = nums2[nums2Index];
-            nums1Index++;
+            if (nums1[nums1Index] < nums2[nums2Index])
+            {
+                result[i] = nums1[nums1Index];
+                nums1Index++;
+                continue;
+            }
+
+            result[i] = nums2[nums2Index];
             nums2Index++;
         }
 
-        while (nums2Index < n)
+        for (int i = 0; i < m + n; i++)
         {
-            nums1[m + nums2Index] = nums2[nums2Index];
-            nums2Index++;
+            nums1[i] = result[i];
         }
     }
 }
