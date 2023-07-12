@@ -70,7 +70,7 @@ public class UnitTest1
     {
         int?[] inputArray = inputArrayParams.Select(i => i == int.MinValue ? (int?)null : i).ToArray();
 
-        var root = TreeNode.FromArray(inputArray);
+        var root = TreeNode.Deserialize(inputArray);
         var target = root.FindNode(targetValue);
 
         _testOutputHelper.WriteLine(root.ToString());
@@ -99,6 +99,52 @@ public class TreeNode
         val = x;
     }
 
+    public static TreeNode Deserialize(IList<int?> vals) {
+        
+        if(vals == null) return null;
+        
+        //Split string 
+        if(vals.Count == 0) return null;
+        
+        Queue<TreeNode> q = new Queue<TreeNode>();
+        
+        //First value is root node
+        TreeNode root = new TreeNode(vals[0].Value);
+        q.Enqueue(root);
+        
+        TreeNode p = null;
+        int? val;
+        
+        int i = 1;
+        
+        //Run a loop and traverse the array
+        while(i < vals.Count) {
+            p = q.Dequeue();
+            val = vals[i++];
+            
+            if(val == null) {
+                p.left = null;
+            } else {
+                p.left = new TreeNode(val.Value);
+                q.Enqueue(p.left);
+            }
+            
+            if(i < vals.Count) {
+                val = vals[i++];
+                if(val == null) {
+                    p.right = null;
+                } else {
+                    p.right = new TreeNode(val.Value);
+                    q.Enqueue(p.right);
+                }
+            }
+        }
+        
+        
+        return root;
+       
+    }
+    
     public static TreeNode? FromArray(int?[] array)
     {
         TreeNode? node = From(array, 0);
