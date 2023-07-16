@@ -1,3 +1,5 @@
+using System.Diagnostics;
+using System.Text;
 using Xunit.Abstractions;
 
 namespace nodeDistance;
@@ -12,69 +14,65 @@ public class UnitTest1
     }
 
     [Theory]
-    [InlineData(new [] { 3, 5, 1, 6, 2, 0, 8, int.MinValue, int.MinValue, 7, 4 }, new[] { 5, 6, 2, int.MinValue, int.MinValue, 7, 4 },new[] { 1, 0, 8 } )]
-    [InlineData(new [] { 0,1,2,int.MinValue,3,int.MinValue,5,4 }, new[] { 1, int.MinValue, 3, 4 },new[] { 2, int.MinValue, 5 } )]
-    public void TestSplitArrays(int[] arrayInput, int[] expectedLeftArray, int[] expectedRightArray)
+    [InlineData(new[] { 3, 5, 1, 6, 2, 0, 8, int.MinValue, int.MinValue, 7, 4 })]
+    [InlineData(new[] { 1,2,3,4,5,6,7 })]
+    [InlineData(new[] { 0, 1, 2, int.MinValue, 3, int.MinValue, 5, 4 })]
+    [InlineData(
+        new[]
+        {
+            0, 2, 1, 3, 6, 5, 9, 4, 22, 13, 28, 7, 11, int.MinValue, int.MinValue, 8, 21, int.MinValue, int.MinValue,
+            int.MinValue, 14, 32, int.MinValue, int.MinValue, 33, 16, 19, 30, 10, int.MinValue, int.MinValue, 17, 18,
+            42, 41, 40, int.MinValue, int.MinValue, 39, 23, int.MinValue, 34, int.MinValue, 12, int.MinValue, 29, 31,
+            25, int.MinValue, int.MinValue, int.MinValue, int.MinValue, int.MinValue, int.MinValue, int.MinValue,
+            int.MinValue, 48, int.MinValue, 36, int.MinValue, int.MinValue, 15, 20, int.MinValue, int.MinValue,
+            int.MinValue, int.MinValue, 47, int.MinValue, int.MinValue, int.MinValue, 37, int.MinValue, 26, 24, 43,
+            int.MinValue, int.MinValue, int.MinValue, int.MinValue, 38, int.MinValue, 45, int.MinValue, 27,
+            int.MinValue, int.MinValue, 46, int.MinValue, int.MinValue, int.MinValue, 35, 49, int.MinValue,
+            int.MinValue, 44
+        })]
+    public void PrintBFS(int[] inputArrayParams)
     {
-        var array = ToNullableArray(arrayInput);
+        var stopwatch = new Stopwatch();
+        stopwatch.Start();
+        var inputArray = inputArrayParams.Select(i => i == int.MinValue ? (int?)null : i).ToArray();
 
-        (int?[] leftArray, int?[] rightArray) = TreeNode.SplitArrays(1, array);
+        var root = TreeNode.Deserialize(inputArray);
 
-        Assert.Equal(ToNullableArray(expectedLeftArray), leftArray);
-        Assert.Equal(ToNullableArray(expectedRightArray), rightArray);
-    }
+        var printLevelOrder = new Solution().PrintLevelOrder(root);
 
-    private static int?[] ToNullableArray(int[] arrayInput)
-    {
-        return arrayInput.Select(i => i == int.MinValue ? (int?)null : i).ToArray();
-    }
+        _testOutputHelper.WriteLine(printLevelOrder);
 
-    [Fact]
-    public void TestBuildTree()
-    {
-        var array = new int?[] { 3, 5, 1, 6, 2, 0, 8, null, null, 7, 4 };
-        var root = TreeNode.FromArray(array);
-        _testOutputHelper.WriteLine(root.ToString());
+        stopwatch.Stop();
+        _testOutputHelper.WriteLine("time spend = " + stopwatch.Elapsed.TotalSeconds);
     }
     
-    [Fact]
-    public void TestBuildTree2()
-    {
-        var array = new int?[] {  0,1,2,null,3,null,5,4 };
-        var root = TreeNode.FromArray(array);
-        _testOutputHelper.WriteLine(root.ToString());
-    }
-    
-    
-    [Theory]
-    [InlineData(5,3)]
-    [InlineData(2,5)]
-    [InlineData(0,1)]
-    public void FindParentTest(int targetValue, int parentValue)
-    {
-        var array = new int?[] { 3, 5, 1, 6, 2, 0, 8, null, null, 7, 4 };
-        var root = TreeNode.FromArray(array);
-        var target = root.FindNode(targetValue);
-
-        var parent = Solution.FindParentOf(root, target);
-
-        Assert.Equal(root.FindNode(parentValue), parent);
-    }
 
     [Theory]
-    [InlineData(new [] { 3, 5, 1, 6, 2, 0, 8, int.MinValue, int.MinValue, 7, 4 }, 5, 2, new [] { 7, 4, 1} )]
-    [InlineData(new [] { 3, 5, 1, 6, 2, 0, 8, int.MinValue, int.MinValue, 7, 4 }, 2, 1, new [] { 7, 4, 5} )]
-    [InlineData(new [] { 3, 5, 1, 6, 2, 0, 8, int.MinValue, int.MinValue, 7, 4 }, 2, 2, new [] { 6, 3} )]
-    [InlineData(new [] { 0,1,2,int.MinValue,3,int.MinValue,5,4 }, 3, 3, new [] { 1,4,2} )]
+    [InlineData(new[] { 3, 5, 1, 6, 2, 0, 8, int.MinValue, int.MinValue, 7, 4 }, 5, 2, new[] { 7, 4, 1 })]
+    [InlineData(new[] { 3, 5, 1, 6, 2, 0, 8, int.MinValue, int.MinValue, 7, 4 }, 2, 1, new[] { 7, 4, 5 })]
+    [InlineData(new[] { 3, 5, 1, 6, 2, 0, 8, int.MinValue, int.MinValue, 7, 4 }, 2, 2, new[] { 6, 3 })]
+    [InlineData(new[] { 0, 1, 2, int.MinValue, 3, int.MinValue, 5, 4 }, 3, 3, new[] { 2 })]
+    [InlineData(
+        new[]
+        {
+            0, 2, 1, 3, 6, 5, 9, 4, 22, 13, 28, 7, 11, int.MinValue, int.MinValue, 8, 21, int.MinValue, int.MinValue,
+            int.MinValue, 14, 32, int.MinValue, int.MinValue, 33, 16, 19, 30, 10, int.MinValue, int.MinValue, 17, 18,
+            42, 41, 40, int.MinValue, int.MinValue, 39, 23, int.MinValue, 34, int.MinValue, 12, int.MinValue, 29, 31,
+            25, int.MinValue, int.MinValue, int.MinValue, int.MinValue, int.MinValue, int.MinValue, int.MinValue,
+            int.MinValue, 48, int.MinValue, 36, int.MinValue, int.MinValue, 15, 20, int.MinValue, int.MinValue,
+            int.MinValue, int.MinValue, 47, int.MinValue, int.MinValue, int.MinValue, 37, int.MinValue, 26, 24, 43,
+            int.MinValue, int.MinValue, int.MinValue, int.MinValue, 38, int.MinValue, 45, int.MinValue, 27,
+            int.MinValue, int.MinValue, 46, int.MinValue, int.MinValue, int.MinValue, 35, 49, int.MinValue,
+            int.MinValue, 44
+        }, 11, 20, new int[] { })]
     public void TestSolution1(int[] inputArrayParams, int targetValue, int k, int[] expectedResult)
     {
-        int?[] inputArray = inputArrayParams.Select(i => i == int.MinValue ? (int?)null : i).ToArray();
+        var stopwatch = new Stopwatch();
+        stopwatch.Start();
+        var inputArray = inputArrayParams.Select(i => i == int.MinValue ? (int?)null : i).ToArray();
 
         var root = TreeNode.Deserialize(inputArray);
         var target = root.FindNode(targetValue);
-
-        _testOutputHelper.WriteLine(root.ToString());
-        _testOutputHelper.WriteLine(target.ToString());
 
         var distanceK = new Solution().DistanceK(root, target, k);
 
@@ -82,7 +80,11 @@ public class UnitTest1
         {
             _testOutputHelper.WriteLine(el.ToString());
         }
+
         Assert.Equal(expectedResult, distanceK);
+
+        stopwatch.Stop();
+        _testOutputHelper.WriteLine("time spend = " + stopwatch.Elapsed.TotalSeconds);
     }
 }
 
@@ -99,67 +101,61 @@ public class TreeNode
         val = x;
     }
 
-    public static TreeNode Deserialize(IList<int?> vals) {
-        
-        if(vals == null) return null;
-        
+    public static TreeNode? Deserialize(IList<int?>? vals)
+    {
+        if (vals == null) return null;
+
         //Split string 
-        if(vals.Count == 0) return null;
-        
-        Queue<TreeNode> q = new Queue<TreeNode>();
-        
+        if (vals.Count == 0) return null;
+
+        Queue<TreeNode?> q = new Queue<TreeNode?>();
+
         //First value is root node
-        TreeNode root = new TreeNode(vals[0].Value);
+        var root = new TreeNode(vals[0].Value);
         q.Enqueue(root);
-        
-        TreeNode p = null;
-        int? val;
-        
+
         int i = 1;
-        
+
         //Run a loop and traverse the array
-        while(i < vals.Count) {
-            p = q.Dequeue();
-            val = vals[i++];
-            
-            if(val == null) {
+        while (i < vals.Count)
+        {
+            var p = q.Dequeue();
+
+            if (vals[i] == null)
+            {
                 p.left = null;
-            } else {
-                p.left = new TreeNode(val.Value);
+            }
+            else
+            {
+                p.left = new TreeNode(vals[i].Value);
                 q.Enqueue(p.left);
             }
             
-            if(i < vals.Count) {
-                val = vals[i++];
-                if(val == null) {
+            i++;
+
+            if (i < vals.Count)
+            {
+                if (vals[i] == null)
+                {
                     p.right = null;
-                } else {
-                    p.right = new TreeNode(val.Value);
+                }
+                else
+                {
+                    p.right = new TreeNode(vals[i].Value);
                     q.Enqueue(p.right);
                 }
+
+                i++;
             }
         }
-        
-        
+
+
         return root;
-       
-    }
-    
-    public static TreeNode? FromArray(int?[] array)
-    {
-        TreeNode? node = From(array, 0);
-        if (node == null)
-        {
-            return node;
-        }
-        
-        (int?[] left, int?[] right) = SplitArrays(1, array);
-        node.left = FromArray(left);
-        node.right = FromArray(right);
-        
-        return node;
     }
 
+    
+    
+    
     public override string ToString()
     {
         var trim = $"{val}-{left}-{right}".Trim('-');
@@ -167,64 +163,14 @@ public class TreeNode
         return trim.Contains("-") ? $"({trim})" : trim;
     }
 
-    public static (int?[], int?[]) SplitArrays(int index, int?[] array)
-    {
-        IList<int?> leftArray = new List<int?>();
-        IList<int?> rightArray = new List<int?>();
-        int level = 0;
-        while (index < array.Length)
-        {
-            var numberOfItemsToAdd = (int)Math.Pow(2, level);
-            
-            // add to left array
-            for (int i = 0; i < numberOfItemsToAdd; i++)
-            {
-                if (index < array.Length)
-                {
-                    leftArray.Add(array[index]);
-                }
-                index++;
-            }
-
-            // add to right array
-            for (int i = 0; i < numberOfItemsToAdd; i++)
-            {
-                if (index < array.Length)
-                {
-                    rightArray.Add(array[index]);
-                }
-                index++;
-            }
-
-            level++;
-        }
-
-        return (leftArray.ToArray(), rightArray.ToArray());
-    }
-
-    private static TreeNode? From(int?[] array, int index)
-    {
-        if (index >= array.Length)
-        {
-            return null;
-        }
-
-        if (array[index] == null)
-        {
-            return null;
-        }
-
-        return new TreeNode(array[index].Value);
-    }
-
     public TreeNode? FindNode(int target)
     {
-        if (this.val == target)
+        if (val == target)
         {
             return this;
         }
-        
-        if (this.left != null)
+
+        if (left != null)
         {
             var leftSearch = left.FindNode(target);
             if (leftSearch != null)
@@ -239,62 +185,101 @@ public class TreeNode
 
 public class Solution
 {
-    
-    public static TreeNode? FindParentOf(TreeNode? root, TreeNode? target)
+    public string PrintLevelOrder(TreeNode root)
     {
-        if (target == root)
-        {
-            return null;
+        StringBuilder sb = new StringBuilder();
+        Queue<TreeNode> queue = new Queue<TreeNode>();
+
+        sb.AppendLine("enqueue " + root.val); 
+        queue.Enqueue(root);
+        while (queue.Count != 0) {
+ 
+            var tempNode = queue.Dequeue();
+            sb.AppendLine("dequeue and use " + tempNode.val);
+            //sb.Append(tempNode.val + " ");
+ 
+            // Enqueue left child
+            if (tempNode.left != null) {
+                sb.AppendLine("enqueue left node " + tempNode.left.val);
+                queue.Enqueue(tempNode.left);
+            }
+ 
+            // Enqueue right child
+            if (tempNode.right != null) {
+                sb.AppendLine("enqueue right node " + tempNode.right.val);
+                queue.Enqueue(tempNode.right);
+            }
         }
 
-        if (root.left == target || root.right == target)
+        return sb.ToString();
+    }
+    
+    private static TreeNode? FindParentOf(TreeNode? target, Dictionary<TreeNode, TreeNode?> parentDictionary)
+    {
+        return target != null && !parentDictionary.ContainsKey(target) ? null : parentDictionary[target];
+    }
+
+    public IList<int> DistanceK(TreeNode? root, TreeNode? target, int k)
+    {
+        var parentDictionary = new Dictionary<TreeNode, TreeNode?>();
+        MapParents(root, parentDictionary);
+        var distanceKWithPath = DistanceKWithPath(root, target, k, new HashSet<int>(), parentDictionary);
+        return distanceKWithPath.ToList();
+    }
+
+    private void MapParents(TreeNode? root, Dictionary<TreeNode, TreeNode?> parentDictionary)
+    {
+        if (root == null)
         {
-            return root;
+            return;
         }
 
         if (root.left != null)
         {
-            var parent = FindParentOf(root.left , target);
-            if (parent != null)
-            {
-                return parent;
-            }
-        }
-        
-        if (root.right != null)
-        {
-            var parent = FindParentOf(root.right, target);
-            if (parent != null)
-            {
-                return parent;
-            }
+            parentDictionary[root.left] = root;
         }
 
-        return null;
+        if (root.right != null)
+        {
+            parentDictionary[root.right] = root;
+        }
+
+        MapParents(root.left, parentDictionary);
+        MapParents(root.right, parentDictionary);
     }
-    
-    public IList<int> DistanceK(TreeNode root, TreeNode? target, int k)
+
+    private HashSet<int> DistanceKWithPath(TreeNode? root, TreeNode? target, int k, HashSet<int> pathWalked,
+        Dictionary<TreeNode, TreeNode?> parentDictionary)
     {
         if (target == null)
         {
-            return new List<int>();
+            return new HashSet<int>();
         }
-        
+
         if (k == 0)
         {
-            return new List<int> { target.val };
+            return new HashSet<int> { target.val };
         }
-        var parent = FindParentOf(root, target);
 
-        var result = new List<int>();
-        
-        result.AddRange(DistanceK(root, target.left, k-1));
-        result.AddRange(DistanceK(root, target.right, k-1));
-        result.AddRange(DistanceK(root, parent, k-1));
+        pathWalked.Add(target.val);
 
+        var result = new HashSet<int>();
+        if (target.left != null && !pathWalked.Contains(target.left.val))
+        {
+            result.UnionWith(DistanceKWithPath(root, target.left, k - 1, pathWalked, parentDictionary));
+        }
 
-        var hashSet = result.ToHashSet();
-        hashSet.Remove(target.val);
-        return hashSet.ToList();
+        if (target.right != null && !pathWalked.Contains(target.right.val))
+        {
+            result.UnionWith(DistanceKWithPath(root, target.right, k - 1, pathWalked, parentDictionary));
+        }
+
+        var parent = FindParentOf(target, parentDictionary);
+        if (parent != null && !pathWalked.Contains(parent.val))
+        {
+            result.UnionWith(DistanceKWithPath(root, parent, k - 1, pathWalked, parentDictionary));
+        }
+
+        return result;
     }
 }
