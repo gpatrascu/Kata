@@ -1,18 +1,14 @@
-using Xunit.Abstractions;
-
 namespace smallestSufficientTeam;
 
 public class SmallestSufficientTeamTest
 {
-    private readonly ITestOutputHelper _testOutputHelper;
     private readonly IList<IList<string>> _people = new List<IList<string>>();
     private readonly IList<string> _reqSkills = new List<string>();
     private readonly Solution _solution;
 
 
-    public SmallestSufficientTeamTest(ITestOutputHelper testOutputHelper)
+    public SmallestSufficientTeamTest()
     {
-        _testOutputHelper = testOutputHelper;
         _solution = new Solution();
     }
 
