@@ -45,6 +45,7 @@ public class LRUCache
         touched.Enqueue(key);
         RemoveUnusedElements();
 
+        _dictionary.Remove(key);
         _dictionary.Add(key, value);
     }
 }
